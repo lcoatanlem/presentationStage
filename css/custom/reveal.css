@@ -1,0 +1,57 @@
+.img-no-default-style {
+    border: none !important;
+    box-shadow: none !important;
+    background: none !important;
+}
+
+.blue {
+    color: #1d7ce2;
+}
+
+.reveal h4 {
+	text-transform: none;
+}
+
+h1.black-font {
+	color: black;
+}
+
+.reveal section img.no-border {
+	border: none;
+}
+
+span.indent-1 {
+	margin-left: 4em;
+}
+
+span.indent-2 {
+	margin-left: 8em;
+}
+
+span.indent-3 {
+	margin-left: 12em;
+}
+
+span.indent-4 {
+	margin-left: 16em;
+}
+
+span.indent-5 {
+	margin-left: 20em;
+}
+
+span.indent-6 {
+	margin-left: 24em;
+}
+
+span.indent-7 {
+	margin-left: 28em;
+}
+
+.barre {
+	text-decoration: line-through;
+}
+
+b.underlined {
+	text-decoration: underline;
+}

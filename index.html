@@ -1,0 +1,1038 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Formation Java 8</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css">
+  <!-- Custom style -->
+  <link rel="stylesheet" href="css/custom/reveal.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+    <section>
+      <h2>Formation Java 8</h2>
+      <p>Lucas Coatanlem - Loïc Ortola</p>
+      <img src="images/bonjour.png">
+    </section>
+    <section>
+      <h2>Planning de la formation</h2>
+      <ul>
+        <li>Introduction</li>
+        <li>Java 7</li>
+        <ul>
+          <li>Projet Coin</li>
+          <li>G1GC</li>
+        </ul>
+        <li>Projet</li>
+        <li>Java 8</li>
+        <ul>
+          <li>Date &amp; Time</li>
+          <li>Lambdas</li>
+          <li>Streams</li>
+          <li>Collectors</li>
+          <li>CompletableFuture</li>
+        </ul>
+      </ul>
+    </section>
+    <section>
+      <section>
+        <h2>Introduction</h2>
+        <img src="images/evolution.jpeg">
+      </section>
+      <section>
+        <h2>Java 6</h2>
+        <h4><img src="images/mustang.jpg" width="300px"/></h4>
+        <ul>
+          <li>Décembre 2006 &rarr; Avril 2013</li>
+          <li>45 updates (113 non-publiques)</li>
+          <li>HotSpot VM 10 &rarr; 20</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Java 7</h2>
+        <h4><img src="images/dolphin.jpg" width="300px"/></h4>
+        <ul>
+          <li>Juillet 2011 &rarr; Avril 2015</li>
+          <li>80 updates (101 non-publiques)</li>
+          <li>HotSpot VM 21 &rarr; 23</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Java 8</h2>
+        <h4><img src="images/java8.png" width="300px"/></h4>
+        <ul>
+          <li>Mars 2014 &rarr; aujourd'hui</li>
+          <li>92 updates</li>
+          <li>Pas de nouvelle VM</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Java pains</h2>
+        <h4><img src="images/nomore.gif" height="200px"/></h4>
+        <ul>
+          <li>Langage verbeux</li>
+          <li>API Date &amp; Time</li>
+          <li>Pas de fonctionnel</li>
+          <li>Algorithmes Map Reduce</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Java pains</h2>
+        <h4><img src="images/nomore.gif" height="200px"/></h4>
+        <ul>
+          <li>Gestion concurrence / threads</li>
+          <li>Classpath</li>
+          <li>Taille du JDK</li>         
+          <li>API Logging</li>
+        </ul>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h2>Java 7</h2>
+        <ul>
+          <li>Projet Coin</li>
+          <li>G1GC</li>
+          <li>NIO.2</li>
+          <li>Autres nouveautés</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Projet Coin</h2>
+        <h4><img src="images/coin.gif"></h4>      
+      </section>
+      <section>
+        <h2>Projet Coin</h2>
+        <h4>Operateur diamond &lt;&gt;</h4>
+        <br/>
+        <div>
+          <pre><code data-noescape>Map&lt;String,List&lt;String&gt;&gt; myMap =<br/><span class="indent-1">new HashMap&lt;String,List&lt;String&gt;&gt;();</span></code></pre>
+          <pre><code>Map&lt;String,List&lt;String&gt;&gt; myMap = new HashMap&lt;&gt;();</code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Projet Coin</h2>
+        <h4>Varargs et Generics</h4>
+        <br/>
+        Suppression des warnings du compilateur :
+        <div>
+          <pre><code>-Xlint:varargs</code></pre>
+        Avec les annotations :
+          <pre><code>@SafeVarags</code></pre>
+          <pre><code>@SuppressWarnings({"unchecked", "varargs"})</code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Projet Coin</h2>
+        <h4>String &amp; switch</h4>
+        <br/>
+        <div>
+          <pre><code data-noescape>String myString = "Bonjour!";<br/>switch(myString) {<br/><span class="indent-1">case "Bonjour!" :</span><br/><span class="indent-2">continue;</span><br/><span class="indent-1">default :</span><br/><span class="indent-2">break;</span><br/>}</code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Projet Coin</h2>
+        <h4>Littéraux</h4>
+        <br/>
+        <div>
+          Littéraux numériques :
+          <pre><code class="Java">int x1 = 1_000;</code></pre>
+          Entiers binaires :
+          <pre><code class="Java">int x1 = 0b1111101000;</code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Projet Coin</h2>
+        <h4>Try with resources / Catch multiples</h4>
+        <br/>
+        <div>
+          <pre><code class="Java" data-trim data-noescape>try (Statement stmt = connection.createStatement()) {<br/><span class="indent-1">/* Code métier... */</span><br/>} catch (SQLException e1) {<br/><span class="indent-1">/* Gestion SQLException */</span><br/>} catch (Exception e2) {<br/><span class="indent-1">/* Gestion Exception */</span><br/>}</code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Garbage Collection</h2>
+        <img src="images/conventionnalgc.jpg">
+      </section>
+      <section>
+        <h2>Garbage First (G1GC)</h2>
+        <img src="images/g1gc.jpg" height="500px">
+      </section>
+      <section>
+        <h2>NIO.2</h2>
+        <h4>java.nio.file >> java.io.File</h4>
+        <ul>
+        	<li>Gestion <b class="underlined">propre</b> des exceptions</li>
+        	<li><b class="underlined">Accès complet</b> au système de fichiers</li>
+        	<li>FileSystem / FileStore</li>
+        	<li>Méthodes utilitaires</li>
+        	<li>DirectoryStream</li>
+        </ul>
+      </section>
+      <section>
+        <h2>NIO.2</h2>
+        <h4>java.nio.channels</h4>
+        <ul>
+        	<li>Ajout des <b class="underlined">AsynchronousChannel</b></li>
+        	<ul>
+        		<li>AsynchronousFileChannel</li>
+        		<li>AsynchronousSocketChannel</li>
+        		<li>AsynchronousServerSocketChannel</li>
+        	</ul>
+        	<li>Utilisations :</li>
+        </ul>
+        <div>
+          	<pre><code data-trim data-noescape>Future&lt;V&gt; operation(args);<br/>void operation(args, A attachment, <br/><span class="indent-2">CompletionHandler&lt;V,? super A&gt; handler);</span></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Autres nouveautés</h2>
+        <ul>
+          <li>Support des langages dynamiques</li>
+          <li>Compression des pointeurs 64bits</li>
+          <li>API java.util.concurrent mise à jour</li>
+          <li>Timsort &gt;&gt; merge sort (Collections &amp; arrays)</li>
+          <li>Deployment Rule Set</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Autres nouveautés</h2>
+        <ul>
+          <li>Librairies algorithmes de cryptage elliptiques</li>
+          <li>Adaptation de XRender aux nouveaux GPUs</li>
+          <li>API pour les fonctionnalités graphiques de Java 6</li>
+          <li>Librairies de protocoles réseau (SCTP...)</li>
+          <li>Upstream mis à jour en XML et Unicode</li>
+        </ul>
+      </section>
+    </section>
+    <section data-background="images/plan.jpg">
+      <h1 class="black-font">Projet</h1>
+    </section>
+    <section>
+      <section>
+        <h2>Java 8</h2>
+        <ul>
+          <li>Date &amp; Time</li>
+          <li>Lambdas</li>
+          <li>Streams</li>
+          <li>Collectors</li>
+          <li>CompletableFuture</li>
+        </ul>
+      </section>
+      <section>
+      	<h2>Date &amp; Time</h2>
+      	<h4>java.util.Date<br/><div id="time"></div></h4>
+      	<ul>
+      		<li>Années : <b class="underlined">offset</b> depuis 1900</li>
+      		<li>Mois : index à partir de <b class="underlined">0</b></li>
+      		<li>Date : combinaison de <b class="underlined">date + time</b></li>
+      		<li>Dates mutables &rarr; <b class="underlined">pas thread-safe</b></li>
+      		<li>Internationalisation impossible</li>
+      	</ul>
+      	<br/><br/><br/>La quasi-totalité des méthodes sont <b class="underlined">dépréciées</b>...
+      </section>
+      <section>
+      	<h2>Date &amp; Time</h2>
+      	<h4>java.util.GregorianCalendar<br/><img src="images/calendar.jpeg" height="100px"></h4>
+      	<ul>
+      		<li>Mois : index à partir de <b class="underlined">0</b></li>	
+      		<li>Calendrier : <b class="underlined">pas formattable</b></li>
+      		<li>Calendar mutable &rarr; <b class="underlined">pas thread-safe</b></li>
+      		<li>Calendar : <b class="underlined">pas type-safe</b> </li>
+      		<li>Stockage des données :
+      			<ul>
+      				<li>millisecondes depuis <b class="underlined">epoch</b></li>
+      				<li>set de champs</li>
+      			</ul>
+      		</li>
+      	</ul>
+      </section>
+      <section>
+      	<h2>Date &amp; Time</h2>
+      	<h4>Trouvez l'erreur!</h4>
+      	<div>
+      		<pre><code class="Java" data-trim data-noescape>Date date = new Date(2016,7,13,11,00);<br/>System.out.println(date); /* ??? */<br/>System.out.println(date.getTime()); /* ??? */<br/>System.out.println(date.getDay()); /* ??? */<br/>System.out.println(date.getDate); /* ??? */<br/>System.out.println(date.getYear()); /* ??? */<br/>Date date2 = new Date(2016,8,13,11,00);<br/>System.out.println(new Date(date2.getTime()-date.getTime()));<br/>/* ??? */</code></pre>
+      	</div>
+      </section>
+      <section>
+      	<h2>Date &amp; Time</h2>
+      	<h4>Trouvez l'erreur!</h4>
+      	<div>
+      		<pre><code class="Java" data-trim data-noescape>Date date = new Date(2016,07,13,11,00);<br/>System.out.println(date); /* Sun Aug 13 11:00:00 CEST 3916 */<br/>System.out.println(date.getTime()); /* 61429222800000 */<br/>System.out.println(date.getDay()); /* 0 */<br/>System.out.println(date.getDate); /* 13 */<br/>System.out.println(date.getYear()); /* 2016 */<br/>Date date2 = new Date(2016,8,13,11,00);<br/>System.out.println(new Date(date2.getTime()-date.getTime()));<br/>/* Sun Feb 01 01:00:00 CET 1970 */</code></pre>
+      	</div>
+      </section>
+      <section>
+      	<h2>Date &amp; Time</h2>
+      	<h4><img src="images/jodatime.jpg" height="100px"> <img class="no-border" src="images/fleche.png" height="100px"> <img src="images/javadt.png" height="100px"></h4>
+        <ul>
+          <li>Classes <b class="underlined">non-mutables</b></li>
+          <li><b class="underlined">Séparation des domaines</b> Date &amp; Time</li>
+          <li>Problème des <b class="underlined">time zones</b></li>
+          <li>Séparation des <b class="underlined">chronologies</b> : pas tous en ISO-8601</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Date &amp; Time</h2>
+        <h4>Local Dates &amp; Times</h4>
+     	<div>
+        	<pre><code class="Java" data-trim>LocalDateTime myDateTime = LocalDateTime.now();</code></pre>
+        	<pre><code class="Java" data-trim>LocalDate myDate = LocalDate.of(2016, Month.JULY, 1);</code></pre>
+        	<pre><code class="Java" data-trim>LocalDate myDate = LocalDate.ofEpochDay(150);</code></pre>
+        	<pre><code class="Java" data-trim>LocalTime myTime = LocalTime.of(14, 00);</code></pre>
+        	<pre><code class="Java" data-trim>LocalTime myTime = LocalTime.parse("14:00:30");</code></pre>
+ 		</div>
+      </section>
+      <section>
+        <h2>Date &amp; Time</h2>
+        <h4>Period &amp; Duration</h4>
+        <h4><img src="images/duration.jpg" height="100px"></h4>
+     	<div>
+        	<pre><code class="Java" data-trim data-noescape>LocalDate myNewDate = myDate.plusYears(10);<br/>Period weekly = Period.ofWeeks(1);<br/>myNewDate.plus(weekly); // Attention, non-mutable</code></pre>
+        	<pre><code class="Java" data-trim data-noescape>LocalTime myNewTime = myTime.plusMinutes(30);<br/>Duration everyHour = Duration.ofHours(1);<br/>myNewTime.plus(everyHour); // Attention, non-mutable</code></pre>
+ 		</div>
+      </section>
+      <section>
+        <h2>Date &amp; Time</h2>
+        <h4>Timezones</h4>
+        <h4><img src="images/timezones.gif" height="100px"></h4>
+     	<div>
+     		<pre><code data-trim data-noescape>ZoneId zone = ZoneId.of("Europe/Paris");<br/>ZonedDateTime myZonedDateTime =<br/><span class="indent-1">ZonedDateTime.of(myDate, myTime, zone);</span></code></pre>
+ 		</div>
+      </section>
+      <section>
+      <h2>Méthodes par défaut</h2>
+      Objectif :
+      <ul>
+      	<li>Ajouter un <b class="underlined">comportement par défaut</b> dans une interface</li>
+      	<li>Ajouter une méthode uniquement dans l'<b class="underlined">interface</b></li>
+      </ul>
+      <div>
+      	<pre><code class="java" data-trim data-noescape>public interface Animal {<br/><span class="indent-1">private String name;</span><br/><span class="indent-1">/* Les méthodes existantes */</span><br/><span class="indent-1">default void printName() {</span><br/><span class="indent-2"> System.out.println(this.name);</span><br/><span class="indent-1">}</span><br/>}</code></pre>
+      	&rarr; <b class="underlined">code lié à la compilation</b>
+      </div>
+      </section>
+      <section>
+      	<h2>Méthodes par défaut</h2>
+      	<h4><img src="images/multiple.png" height="200px"></h4>
+      	<ul>
+      		<li><b class="underlined">Héritage multiple d'implémentations</b> &rarr; conflits :</li>
+      		<ul>
+      			<li>L'implémentation de la <b class="underlined">classe</b></li>
+      			<li>L'implémentation de l'interface <b class="underlined">la plus spécifique</b></li>
+      			<li>L'implémentation d'un <b class="underlined">appel explicite</b></li>
+      		</ul>
+      		<li><b class="underlined">Méthodes statiques autorisées</b> dans les interfaces</li>
+      	</ul>
+      </section>
+      <section>
+		<h2>Programmation fonctionnelle</h2>
+		<h4>1930s</h4>
+		<h4><img src="images/church.jpg" height="200px" class="no-border"></h4>
+		Alonzo Church développe le <b class="underlined">lambda-calcul</b>, une <b class="underlined">théorie des fonctions</b>, simple mais puissante     	
+      </section>
+      <section>
+		<h2>Programmation fonctionnelle</h2>
+		<h4>1930s</h4>
+		<h4><img src="images/haskell.jpg" height="200px" class="no-border"></h4>
+		Haskell B. Curry développe la <b class="underlined">logique combinatoire</b>, qui deviendra le moteur des langages fonctionnels (paresseux)
+      </section>
+      <section>
+		<h2>Programmation fonctionnelle</h2>
+		<h4>1950s</h4>
+		<h4><img src="images/mccarthy.png" height="200px" class="no-border"></h4>
+		John McCarthy développe <b class="underlined">Lisp</b>, le premier <b class="underlined">langage fonctionnel</b>, sous l'influence du <b class="underlined">lambda-calcul</b>, mais <b class="underlined">impur</b> (en conservant l'affectation des variables)
+      </section>
+      <section>
+		<h2>Programmation fonctionnelle</h2>
+		<h4>1960s</h4>
+		<h4><img src="images/landin.jpg" height="200px" class="no-border"></h4>
+		Peter Landin développe ISWIM (If You See What I Mean) :
+		<ul>
+			<li>premier langage de programmation fonctionnel <b class="underlined">pur</b></li>
+			<li>fortement basé sur le <b class="underlined">lambda-calcul</b></li>
+			<li>sans affectation de variables</li>
+		</ul>
+      </section>
+      <section>
+		<h2>Programmation fonctionnelle</h2>
+		<h4>1970s</h4>
+		<h4><img src="images/backus.jpg" height="200px" class="no-border"></h4>
+		John Backus développe <b class="underlined">FP</b>, un langage de programmation fonctionnel qui pose l'accent sur les <b class="underlined">fonctions d'ordre supérieur</b> et sur l'<b class="underlined">intégration avec le raisonnement</b> sur les programmes
+      </section>
+      <section>
+		<h2>Programmation fonctionnelle</h2>
+		<h4>1970s</h4>
+		<h4><img src="images/milner.gif" height="200px" class="no-border"></h4>
+		Robin Milner et son équipe développent <b class="underlined">ML</b>, le premier langage fonctionnel moderne, qui introduit l'<b class="underlined">inférence de type</b> et les <b class="underlined">types polymorphes</b>
+      </section>	
+      <section>
+		<h2>Programmation fonctionnelle</h2>
+		<h4>1985</h4>
+		<h4><img src="images/huet.jpg" height="200px" class="no-border"></h4>
+		Gérard Huet et son équipe à l'INRIA développent <b class="underlined">CAM</b>, une version du langage ML destiné à s'intégrer avec le système <b class="underlined">Coq</b> (preuves de programmes)
+      </section>
+      <section>
+		<h2>Programmation fonctionnelle</h2>
+		<h4>1987</h4>
+		<h4><img src="images/haskellreport.jpg" height="200px" class="no-border"></h4>
+		Un comité international de chercheurs débute le développement de <b class="underlined">Haskell</b>, un langage fonctionnel paresseux <b class="underlined">standard</b> qui aboutira en 2003 avec le rapport Haskell 98
+      </section>
+      <section>
+		<h2>Programmation fonctionnelle</h2>
+		<h4>Principes</h4>
+		<ul>
+			<li><b class="underlined">Immutabilité</b> / pas d'effets de bord &rarr; code plus robuste et plus stable</li>
+			<li><b class="underlined">Fonctions d'ordre supérieur</b>, propriétés (une au moins) :
+				<ul>
+					<li>une ou plusieurs fonctions en paramètre</li>
+					<li>renvoie une fonction</li>
+				</ul>
+			</li>
+			<li><b class="underlined">Lambdas</b> / fonctions anonymes &rarr; code concis, clair et robuste</li>
+			<li><b class="underlined">Récursivité</b> / fonction s'appelant elle-même &rarr; code plus lisible et plus court</li>
+		</ul>
+      </section>
+      <section>
+		<h2>Programmation fonctionnelle</h2>
+		Langages implémentant certains concepts de la programmation fonctionnelle :<br/>
+		<ul>
+			<li>Javascript</li>
+			<li>PHP</li>
+			<li>Scala</li>
+			<li>Swift</li>
+			<li>Ruby</li>
+			<li>Et maintenant... Java!</li>
+		</ul>
+      </section>
+      <section>
+      	<h2>Calculons...</h2>
+      	<div>
+      		<pre><code class="Java" data-trim data-noescape>public interface Operation {<br/><span class="indent-1">public Integer compute(Integer x, Integer y);</span><br/>}</code></pre>
+      		<pre><code class="Java" data-trim data-noescape>class Addition implements Operation {<br/><span class="indent-1">@Override</span><br/><span class="indent-1">public Integer compute(Integer x, Integer y) { return x+y; }</span><br/>}<br/>class Subtraction implements Operation {<br/><span class="indent-1">@Override</span><br/><span class="indent-1">public Integer compute(Integer x, Integer y) { return x-y; }</span><br/>}<br/>class Multiplication implements Operation {<br/><span class="indent-1">@Override</span><br/><span class="indent-1">public Integer compute(Integer x, Integer y) { return x*y; }</span><br/>}</code></pre>
+      	</div>
+      	<br/>Une interface et <b class="underlined">trois</b> implémentations
+      </section>
+      <section>
+      	<h2>Calculons...</h2>
+      	<h4><img src="images/calcul.gif"></h4>
+      	<div>
+      		<pre><code class="Java" data-trim data-noescape>public class Calculator {<br/><span class="indent-1">public static Integer compute(Integer x, Integer y,</span><br/><span class="indent-2">Operation operation) { return operation.compute(x,y); }</span><br/><span class="indent-1">public static void main(String[] args) {</span><br/><span class="indent-2">Integer add = compute(3,7,new Addition());</span><br/><span class="indent-2">Integer sub = compute(10,5,new Subtraction());</span><br/><span class="indent-2">Integer mul = compute(4,6,new Multiplication());</span><br/><span class="indent-2">System.out.println(add + " " + sub + " " + mul + " ");</span><br/><span class="indent-2">/* 10 5 24 */</span><br/><span class="indent-1">}</span><br/>}
+      	</code></pre></div>
+      	C'est long et verbeux...
+      </section>
+      <section>
+      	<h2>Calculons...</h2>
+      	<h4>Réduisons ce code!</h4>
+      	<div>
+      		<pre><code class="Java" data-trim data-noescape>public class Calculator {<br/><span class="indent-1">public static Integer compute(Integer x, Integer y,</span><br/><span class="indent-2">Operation operation) { return operation.compute(x,y); }</span><br/><span class="indent-1">public static void main(String[] args) {</span><br/><span class="indent-2">Integer add = compute(3,7,new Operation(){</span><br/><span class="indent-3">@Override</span><br/><span class="indent-3">public Integer compute(Integer x, Integer y) {</span><br/><span class="indent-4">return x+y;</span><br/><span class="indent-3">}</span><br/><span class="indent-2"}>});</span><br/><span class="indent-2">Integer sub = compute(10,5,new Operation(){ ... });</span><br/><span class="indent-2">Integer mul = compute(4,6,new Operation(){ ... });</span><br/><span class="indent-2">System.out.println(add + " " + sub + " " + mul + " ");</span><br/><span class="indent-2">/* 10 5 24 */</span><br/><span class="indent-1">}</span><br/>}</code></pre>
+      	</div>
+      	<br/>Code toujours long, et pas très clair...
+      </section>
+      <section>
+      	<h2>Calculons...</h2>
+      	<h4>Mais alors, ces lambdas ?</h4>
+      	<div>
+      		<pre><code class="Java" data-trim data-noescape>public interface Operation {<br/><span class="indent-1">public Integer compute(Integer x, Integer y);</span><br/>}</code></pre>
+      		<pre><code class="Java" data-trim data-noescape>public class Calculator {<br/><span class="indent-1">public static Integer compute(Integer x, Integer y,</span><br/><span class="indent-2">Operation operation) { return operation.compute(x,y); }</span><br/><br/><span class="indent-1">public static void main(String[] args) {</span><br/><span class="indent-2">Integer add = compute(3,7, (x,y) -&gt; x+y );</span><br/><span class="indent-2">Integer sub = compute(10,5, (x,y) -&gt; x-y );</span><br/><span class="indent-2">Integer mul = compute(4,6, (x,y) -&gt; x*y );</span><br/><span class="indent-2">System.out.println(add + " " + sub + " " + mul + " ");</span><br/><span class="indent-2">/* 10 5 24 */</span><br/><span class="indent-1">}</span><br/>}</code></pre>
+      	</div>
+      	Comment ça marche ?
+      </section>
+      <section>
+      	<h2>Lambdas</h2>
+      	<h4>"Interface fonctionnelle"</h4>
+      	<h4>java.util.function</h4>
+      	<div>
+      		<ul>
+      			<li>Ne possède qu'une <b class="underlined">unique méthode</b></li>
+      			<li>Type des <b class="underlined">paramètres</b> et type de <b class="underlined">retour compatibles</b></li>
+      			<li><b class="underlined">Exceptions</b> jetées <b class="underlined">compatibles</b></li>
+      			<br/>
+      			<li>Annotation @FunctionalInterface : vérification à la <b class="underlined">compilation</b> c'est une "interface fonctionnelle"</li>
+      		</ul>
+      	</div>
+      </section>
+      <section>
+      	<h4>Pattern Map &rarr; Filter &rarr; Reduce</h4>
+      	<div>
+      		<ul>
+ 				<li>Map :
+ 				<ul>
+ 					<li>Input : List&lt;T&gt;</li>
+ 					<li>Output : List&lt;U&gt;</li>
+ 					<li>Même nombre d'éléments</li>
+ 				</ul>
+ 				<li>Filter :
+ 				<ul>
+ 					<li>Input : List&lt;T&gt;</li>
+ 					<li>Output : List&lt;T&gt;</li>
+ 					<li>Moins d'éléments</li>
+ 				</ul>
+      			</li>
+      			<li>Reduce : agrégation
+      			<ul>
+ 					<li>Input : List&lt;T&gt;</li>
+ 					<li>Output : un seul élément</li>
+ 				</ul>
+      			</li>
+      		</ul>
+      	</div>
+      </section>
+      <section>
+      	<h2>Lambdas</h2>
+      	<h4><img src="images/lambda.jpg" height="200px"></h4>
+      	<div>
+      		<div style="overflow: auto; float: left; width: 500px;">
+      			<pre><code data-trim data-noescape>public class Person {<br/><span class="indent-1">private String name;</span><br/><span class="indent-1">private int age;</span><br/><span class="indent-1">/* Constructeurs */</span><br/><span class="indent-1">/* Getters - Setters */</span><br/>}</code></pre>
+      			<pre><code data-trim data-noescape>List&lt;Person&gt; persons =<br/><span class="indent-1">new ArrayList&lt;&gt;();</span></code></pre>
+      		</div>
+      		<div style="overflow: auto; float: right; width: 400px;">
+      			<br/>Moyenne d'âge des personnes de plus de <br/>25 ans?
+      		</div>
+      	</div>
+      </section>
+      <section>
+      	<h4>Java 6 : la programmation impérative</h4>
+      	<h4><img src="images/imperative.jpg" height="100px"></h4>
+      	<div>
+      		<pre><code data-trim data-noescape>int sum = 0;<br/>int n = 0;<br/>int average = 0;<br/>for (Person person : list) {<br/><span class="indent-1">if (person.getAge() >= 25) {</span><br/><span class="indent-2">n++;</span><br/><span class="indent-2">sum += person.getAge();</span><br/><span class="indent-1">}<br/>}<br/>if (n > 0) {</span><br/><span class="indent-1">average = sum / n;</span><br/>}<br/>return average;</code></pre>
+      	</div>
+      </section>
+      <section>
+      	<h2>Lambdas</h2>
+      	<h4>Map</h4>
+      	<div>
+      		<pre><code data-trim data-noescape>public interface Mapper&lt;T,U&gt; {<br/><span class="indent-1">public U map(T t);</span><br/>}</code></pre>
+      		Java 7 :
+      		<pre><code class="Java" data-trim data-noescape>Mapper&lt;Person,Integer&gt; mapper = new Mapper&lt;&gt;() {<br/><span class="indent-1">public Integer map(Person p) {</span><br/><span class="indent-2">return p.getAge();</span><br/><span class="indent-1">}</span><br/>}</code></pre>
+      		Java 8 :
+      		<pre><code class="Java" data-trim data-noescape>Mapper&lt;Person,Integer&gt; mapper =<br/><span class="indent-1">(Person person) -&gt; { return person.getAge(); }</span></code></pre>
+      		<pre><code class="Java" data-trim data-noescape>mapper = Person::getAge; /* méthode non statique */</code></pre>
+      	</div>
+      </section>
+      <section>
+      	<h2>Lambdas</h2>
+      	<h4>Filter</h4>
+      	<div>
+      		<pre><code data-trim data-noescape>public interface Predicate&lt;T&gt; {<br/><span class="indent-1">public boolean filter(T t);</span><br/>}</code></pre>
+      		Java 7 :
+      		<pre><code class="Java" data-trim data-noescape>Predicate&lt;Integer&gt; predicate = new Predicate&lt;&gt;() {<br/><span class="indent-1">public boolean filter(Integer i) {</span><br/><span class="indent-2">return i >= 25;</span><br/><span class="indent-1">}</span><br/>}</code></pre>
+      		Java 8 :
+      		<pre><code class="Java" data-trim data-noescape>Predicate&lt;Integer&gt; predicate = age -&gt; age >= 25;<br/><span class="indent-1">/* Le type des paramètres peut être omis */</span><br/><span class="indent-1">/* Les accolades et le mot-clef "retour" peuvent être</span><br/><span class="indent-1">omis s'il n'y a qu'une ligne de code */</span></code></pre>
+      	</div>
+      </section>
+      <section>
+      	<h2>Lambdas</h2>
+      	<h4>Reduce</h4>
+      	<div>
+      		<pre><code data-trim data-noescape>public interface Reducer&lt;T&gt; {<br/><span class="indent-1">public T reduce(T t1, T t2);</span><br/>}</code></pre>
+      		Java 7 :
+      		<pre><code class="Java" data-trim data-noescape>Reducer&lt;Integer&gt; reduction = new Reducer&lt;&gt;() {<br/><span class="indent-1">public Integer reduce(Integer i1, Integer i2) {</span><br/><span class="indent-2">return i1 + i2;</span><br/><span class="indent-1">}</span><br/>}</code></pre>
+      		Java 8 :
+      		<pre><code class="Java" data-trim data-noescape>Reducer&lt;Integer&gt; reduction = (i1,i2) -&gt; i1 + i2;<br/></code></pre><pre><code class="Java" data-trim data-noescape>reduction = Integer::sum; /* nouvelle méthode statique */</code></pre>
+      	</div>
+      </section>
+      <section>
+      	<h2>Lambdas</h2>
+      	<h4><img src="images/somme.png"></h4>
+      	<div>
+      		<pre><code class="Java" data-trim data-noescape>List&lt;Person&gt; persons = ... ;<br/>int sum = persons.map(mapper)<br/><span class="indent-2">.filter(predicate)</span><br/><span class="indent-2">.reduce(0,reduction);</span></code></pre>
+      	</div>
+      </section>
+      <section>
+      	<h2>Lambdas</h2>
+      	<h4><img src="images/prosandcons.jpg" height="100px"></h4>
+      	<div>
+      		<div style="overflow: auto; float: left; width: 500px;">
+      			<ul>
+      				<li>API <b class="underlined">optimisée</b> sans toucher au code</li>
+      			</ul>
+      		</div>
+      		<div style="overflow: auto; float: left; width: 450px;">
+      			<ul>
+      				<li>Liste <b class="underlined">dupliquée</b>, deux fois</li>
+      				<li>Pas de possibilité d'évaluation lazy</li>
+      			</ul>
+      		</div>
+      	</div>
+      </section>
+      <section>
+      	<h2>Stream</h2>
+      	<h4><img src="images/stream.png" height="200px"></h4>
+      	<div>
+      		<pre><code class="java" data-trim data-noescape>int sum = persons.stream() /* Retourne un Stream */<br/><span class="indent-2">.map(Person::getAge)</span><br/><span class="indent-2">.filter(a -&gt; a >= 25)</span><br/><span class="indent-2">.reduce(0, Integer::sum);</span></code></pre>
+      	</div>
+      </section>
+      	<section>
+      		<h2>Stream</h2>
+      		<h4>Une interface paramétrée</h4>
+      		<ul>
+      			<li>Un stream :
+      				<ul>
+      					<li>ne porte <b class="underlined">pas de données</b> &rarr; on déclare des opérations</li>
+      					<li>ne peut <b class="underlined">pas modifier sa source</b> &rarr; traitements parallèles possibles</li>
+      					<li>traite ses données de <b class="underlined">façon lazy</b> &rarr; optimisation des opérations</li>
+      				</ul>
+      			</li>
+      			<li>Une source peut être <b class="underlined">infinie ou non bornée</b> &rarr; garantie calculs en temps fini</li>
+      			<br/>&rarr; <b class="underlined">mécanisme</b> pour déclencher les traitements ?
+      		</ul>
+      	</section>
+      	<section>
+      		<h2>Stream</h2>
+      		<h4><img src="images/construction.jpg" height="100px"></h4>
+      		<div>
+      			<pre><code class="java" data-trim data-noescape>Collection&lt;String&gt; collection = ... ;<br/>Stream&lt;String&gt; stream = collection.stream();</code></pre>
+      			<pre><code class="java" data-trim data-noescape>Stream&lt;String&gt; stream =<br/><span class="indent-1">Arrays.stream(new String [] {"one", "two", "three"});</span></code></pre>
+      			<pre><code class="java" data-trim data-noescape>Stream&lt;String&gt; stream = Stream.of("one", "two", "three");</code></pre>
+      			<pre><code class="java" data-trim data-noescape>Stream.empty(); /* vide */<br/>Stream.of(T t); /* un seul élément */<br/><br/><span class="indent-2">/* et beaucoup d'autres manières */</span></code></pre>
+      		</div>
+      	</section>
+      	<section>
+      		<h2>Stream</h2>
+      		<h4>Opérations sur les streams</h4>
+      		<ul>
+      			<li>Opérations <b class="underlined">intermédiaires</b> &rarr; map, filter</li>
+      			<li>Opérations <b class="underlined">terminales</b>, déclenchent le traitement &rarr; reduce</li>
+      			<li>Opération <b class="underlined">Stateless</b> &rarr; pas besoin de plus d'infos que ce que contient le stream</li>
+      			<li>Opérations <b class="underlined">Stateful</b> &rarr; une variable (compteur) peut être partagée</li>
+      		</ul>
+      	</section>
+      	<section>
+      		<h2>Stream</h2>
+      		<h4>Etats des streams <img class="no-border" src="images/flag.png" height="50px"></h4>
+      		<ul>
+      			<li>sized &rarr; <b class="underlined">cardinal</b> connu</li>
+      			<li>ordered &rarr; <b class="underlined">ordre</b> important (List)</li>
+      			<li>distinct &rarr; pas de <b class="underlined">doublons</b> (Set) </li>
+      			<li>sorted &rarr; <b class="underlined">trié</b> (SortedSet)</li>
+      		</ul>
+      			<div><br/>Certaines opérations peuvent changer cet état,<br/>d'autres ne font rien &rarr; <b class="underlined">première optimisation</b></div>
+      	</section>
+      	<section>
+      		<h2>Stream</h2>
+      		<h4>Récapitulatif</h4>
+      		<ul>
+      			<li>Opérations <b class="underlined">intermédiaires</b> ou <b class="underlined">terminales</b></li>
+      			<li>Seule une opération <b class="underlined">terminale</b> déclenche les <b class="underlined">traitements</b></li>
+      			<li><b class="underlined">Une seule opération terminale</b> est autorisée</li>
+      			<li>Un stream ne peut être <b class="underlined">traité qu'une seule fois</b></li>
+      		</ul>
+      			<div><br/><br/>Si besoin, construire un <b class="underlined">autre stream</b></div>
+      	</section>
+      	<section>
+      	<h2>Réduction simple</h2>
+      	<div>
+      		<br/>
+      		<pre><code class="java" data-trim data-noescape>int sum = persons.stream()<br/><span class="indent-2">.mapToInt(Person::getAge) /* .map(Person::getAge) */</span><br/><span class="indent-2">.filter(a -&gt; a >= 25)</span><br/><span class="indent-2">/* .mapToInt(Integer::intValue) */</span><br/><span class="indent-2">.sum();</span></code></pre>
+      		<ul>
+      			<li><b class="underlined">Valeur par défaut</b> pour une liste vide : 0</li>
+      			<li>Applicable en passant par un <b class="underlined">IntStream</b></li>
+      		</ul>
+      	</div>
+      	</section>
+      	<section>
+      	<h2>Réduction mutable</h2>
+      	Une réduction mutable nécessite :<br/><br/>
+      	<ul>
+      		<li>un <b class="underlined">container</b> : Collection ou StringBuilder</li>
+      		<li>un moyen d'<b class="underlined">ajouter un élément</b> au container</li>
+      		<li>un moyen de <b class="underlined">fusionner deux containers</b></li>
+      	</ul>
+      	<br/><br/>Utilisation d'une classe helper &rarr; <b class="underlined">Collectors</b>
+      	<br/>(java.util.stream)
+      	</section>
+      	<section>
+      	<h2>Collectors</h2>
+      	<h4>Pour les réductions...</h4>
+      	<div>
+      		<pre><code class="java" data-trim data-noescape>Double average = persons.stream()<br/><span class="indent-2">.collect(Collectors.averagingDouble(Person::getAge));</span></code></pre>
+      		<pre><code class="java" data-trim data-noescape>Long count = persons.stream().collect(Collectors.counting());</code></pre>
+      		<pre><code class="java" data-trim data-noescape>String names = persons.stream().map(Person::getName)<br/><span class="indent-3">.collect(Collectors.joining(", "));</span></code></pre>
+      		<pre><code class="java" data-trim data-noescape>Set&lt;Person&gt; personsSet = persons.stream().collect(Collectors.toSet());</code></pre>
+      	</div>
+      	</section>
+      	<section>
+      	<h2>Collectors</h2>
+      	<h4>L'API Comparator</h4>
+      	<div>
+      		<pre><code class="java" data-trim data-noescape>Optional&lt;Person&gt; optionalPerson = persons.stream().collect(<br/><span class="indent-1">Collectors.maxBy(Comparator.comparing(Person::getAge)));</span></code></pre>
+      		<pre><code class="java" data-trim data-noescape>Comparator&lt;Person&gt; comparator = Comparator.comparing(Person::getName)<br/><span class="indent-4">.thenComparing(Person::getAge);</span></code></pre>
+      	</div>
+      	</section>
+      	<section>
+      	<h2>Collectors</h2>
+      	<h4>Pour le mapping...</h4>
+      	Construction du mapping :
+      	<ul>
+      		<li><b class="underlined">Fonction</b> mappant les éléments du Stream</li>
+      		<li>Collecteur appliqué aux <b class="underlined">valeurs mappées</b></li>
+      		&rarr; le <b class="underlined">"downstream"</b>
+      	</ul>
+      	<br/><br/>
+      	<div>
+      		<pre><code class="java" data-trim data-noescape>Set&lt;Integer&gt; personSet = persons.stream().collect(<br/><span class="indent-1">Collectors.mapping(Person::getAge, Collectors.toSet()));</span></code></pre>
+      	</div>
+      	</section>
+      	<section>
+      	<h2>Collectors</h2>
+      	<h4>groupingBy</h4>
+      	Construction via des <b class="underlined">tables de hachage</b>
+      	<ul>
+      		<li>méthode de construction des <b class="underlined">clefs</b></li>
+      		<li>par défaut, éléments rangés dans une <b class="underlined">liste</b></li>
+      		<li>on peut spécifier un <b class="underlined">downstream</b></li>
+      	</ul>
+      	<div>
+      		<pre><code class="java" data-trim data-noescape>Map&lt;Integer, Long> map = persons.stream().collect(<br/><span class="indent-3">Collectors.groupingBy(</span><br/><span class="indent-3">Person::getAge, Collectors.counting()));</span></code></pre>
+      	</div>
+      	</section>
+      	<section>
+      	<h2>Collectors</h2>
+      	<h4>partitionningBy</h4>
+      	Construction d'une Map à partir d'un <b class="underlined">prédicat</b><br/>
+      	<ul>
+      		<li>deux clefs : <b class="underlined">true</b> et <b class="underlined">false</b></li>
+      		<li>on peut ajouter un <b class="underlined">downstream</b></li>
+      	</ul>
+      	<div>
+      		<pre><code class="java" data-trim data-noescape>Map&lt;Boolean, TreeSet&lt;String&gt;&gt; myMap = persons.stream()<br/><span class="indent-1">.collect(Collectors.partitioningBy(</span><br/><span class="indent-2">p -&gt; p.getAge() &gt;= 25,</span><br/><span class="indent-2">Collectors.mapping(</span><br/><span class="indent-3">Person::getName,</span><br/><span class="indent-3">Collectors.toCollection(TreeSet::new)</span><br/><span class="indent-3">)</span><br/><span class="indent-2">);</span></code></pre>
+      	</div>
+      	myMap.get(TRUE) &rarr; personnes ayant plus de 25 ans
+      	</section>
+      	<section>
+      	<h2>Collectors</h2>
+      	<h4>collectingAndThen</h4>
+      	Collecte les données avec un <b class="underlined">downstream</b><br/>&rarr; applique une fonction : <b class="underlined">"finisher"</b> <br/>&rarr; <b class="underlined">indispensable</b> pour retourner des collections <b class="underlined">immutables</b>
+      	<div>
+      		<pre><code class="java" data-trim data-noescape>Set&lt;Map.Entry&lt;Integer, List&lt;Person&gt;&gt;&gt; set = persons.stream().collect(<br/>Collectors.collectingAndThen(<br/><span class="indent-1">Collectors.groupingBy(Person::getAge), /* downstream */</span><br/><span class="indent-1">Map::entrySet /* finisher */</span><br/>);</code></pre>
+      	</div>
+      	</section>
+      	<section>
+      	<h4>Valeurs par défaut</h4>
+      	Réduction de l'<b class="underlined">ensemble vide</b> &amp; <b class="underlined">élément neutre</b>
+      	<ul>
+      		<li>Quelle est la valeur par défaut de max() ?</li>
+      		&rarr; il n'y en a pas...
+      		<li>Quel type lui donner ?</li>
+      		<ul>
+      			<li>int : valeur par défaut &rarr; 0</li>
+      			<li>Integer : valeur par défaut &rarr; null</li>
+      		</ul>
+      	</ul>
+      	<br/><br/><b class="underlined">OptionalInt</b> : il peut ne pas y avoir de résultat
+      	</section>
+      	<section>
+      	<h2>Optional</h2>
+      	<h4><img src="images/optional.png" height="200px"></h4>
+      	<ul>
+      		<li>Optional&lt;T&gt;</li>
+      		<li>OptionalInt, OptionalLong, OptionalDouble</li>
+      	</ul>
+      	<div>
+      		<pre><code class="java" data-trim data-noescape>OptionalInt optionalMax = persons.stream()<br/><span class="indent-4">.mapToInt(Person::getAge)</span><br/><span class="indent-4">.filter(a -&gt; a >= 25)</span><br/><span class="indent-4">.max();</span></code></pre>
+      	</div>
+      	Comment traiter un Optional?
+      	</section>
+      	<section>
+      	<h2>Optional</h2>
+      	<h4>Traitements</h4>
+      	<div>
+      		<ul>
+      			<li>Tester s'il <b class="underlined">contient une valeur</b></li>
+      		</ul>
+	      	<pre><code class="java" data-trim data-noescape>int max = optionalMax.isPresent() ? optionalMax.get : 100;</code></pre>
+    	  	<ul>
+      			<li>Lire la valeur ou jeter une exception</li>
+	      	</ul>
+    	  	<pre><code class="java" data-trim data-noescape>int max = optionalMax.getAsInt(); /* throws NoSuchElementException */</code></pre>
+      		<ul>
+	      		<li>Lire la valeur ou retourner une <b class="underlined">valeur par défaut</b></li>
+    	  	</ul>
+      		<pre><code class="java" data-trim data-noescape>int max = optionalMax.orElse(100); /* returns 100 if no value */</code></pre>
+	      	<ul>
+    	  		<li>Lire la valeur ou jeter une exception</li>
+      		</ul>
+	      	<pre><code class="java" data-trim data-noescape>int max = optionalMax.orElseThrow(exceptionSupplier); </code></pre>
+      	</div>
+      	</section>
+      	<section>
+      		<h2>Parallélisation</h2>
+      		<h4><img src="images/parallel.jpg" height="100px"></h4>
+      		<ul>
+      			<li>Java 7 : Fork/Join
+      				<ul>
+      					<li><b class="underlined">division</b> des sets de données</li>
+      					<li>soumission de <b class="underlined">sous-tâches</b> au <b class="underlined">pool de threads</b></li>
+      				</ul>
+      			</li>
+      			&rarr; code <b class="underlined">complexe</b> et <b class="underlined">pas toujours performant</b>
+      			<li>Java 8 :</li>
+      		</ul>
+      		<div>
+      			<pre><code class="java" data-trim data-noescape>Stream&lt;String&gt; stream = collection.parallelStream();</code></pre>
+      			<pre><code class="java" data-trim data-noescape>Stream&lt;String&gt; stream = collection.stream().parallel();</code></pre>
+      		</div>
+      	</section>
+      	<section>
+      		<h4>Performances : la boucle for</h4>
+      		<div>
+      			<br/>
+      			<pre><code class="java" data-trim data-noescape>List&lt;Long&gt; list = new ArrayList&lt;&gt;(10_000_000);<br/>for (int i = 0; i &lt; 10_000_000; i++) {<br/><span class="indent-1">list.add(ThreadLocalRandom.current().nextLong());</span><br/>}</code></pre>
+      			<ul>
+      				<li>Série : 270 ms</li>
+      			</ul>
+      		</div>
+      	</section>
+      	<section>
+      		<h4>Performances : utilisation de limit</h4>
+      		<div>
+      			<br/>
+      			<pre><code class="java" data-trim data-noescape>Stream&lt;Long&gt; stream =<br/><span class="indent-1">Stream.generate(() -&gt; ThreadLocalRandom.current().nextLong());</span><br/>List&lt;Long&gt; list =<br/><span class="indent-1">stream.limit(10_000_000).collect(Collectors.toList());</span></code></pre>
+      			<ul>
+      				<li>Série : 310 ms</li>
+      				<li>Parallèle : 500 ms</li>
+      			</ul>
+      		</div>
+      	</section>
+      	<section>
+      		<h4>Performances : utilisation de longs</h4>
+      		<div>
+      			<br/>
+      			<pre><code class="java" data-trim data-noescape>Stream&lt;Long&gt; stream =<br/><span class="indent-1">ThreadLocalRandom.current()</span><br/><span class="indent-3">.longs(10_000_000)</span><br/><span class="indent-3">.mapToObj(Long::new);</span><br/>List&lt;Long&gt; list = stream.collect(Collectors.toList());</code></pre>
+      			<ul>
+      				<li>Série : 250 ms</li>
+      				<li>Parallèle : 320 ms</li>
+      			</ul>
+      		</div>
+      	</section>
+      	<section>
+      	<h2>Parallélisation</h2>
+      	<h4><img src="images/prosandcons.jpg" height="100px"></h4>
+      	<div>
+      		<div style="overflow: auto; float: left; width: 500px;">
+      			<ul>
+      				<li>Simple</li>
+      				<li>Presque gratuit</li>
+      			</ul>
+      		</div>
+      		<div style="overflow: auto; float: left; width: 450px;">
+      			<ul>
+      				<li>Calculs supplémentaires</li>
+      				<li>Opérations Stateful &rarr; performances <b class="underlined">dégradées</b></li>
+      				<li>Tous les coeurs</li>
+      				<li>Large sets de données</li>
+      			</ul>
+      		</div>
+      		<br/><br/><br/><br/><br/><br/>Opérations mal configurées &rarr; calculs inutiles <br/>&rarr; performances dégradées
+      	</div>
+      	</section>
+      	<section>
+      	<h2>Concurrence</h2>
+      	<h4>Java 5 et ses classes utilitaires</h4>
+      		<ul>
+      			<li><b class="underlined">Synchronisation &amp; sections critiques</b></li>
+      			<li>Gestion des taches asynchrones &rarr; modèle de threads, <b class="underlined">queues bloquantes</b></li>
+      			<li>Callable (tache) &rarr; Executor &rarr; Future (état de la tache)</li>
+      		</ul>
+      	</section>
+      	<section>
+      	<h2>Concurrence</h2>
+      	<h4>Le framework Executor</h4>
+      		<div>
+      			<pre><code class="java" data-trim data-noescape>public class Main {<br/><span class="indent-1">public static void executeRunnables(final ExecutorService serv,</span><br/><span class="indent-4">List&lt;Runnable&gt; runnables) {</span><br/><span class="indent-2">for(Runnable r : runnables) { serv.execute(r); }</span><br/><span class="indent-2">serv.shutdown();</span><br/><span class="indent-1">}</span><br/><span class="indent-1">public static void main(String[] args) {</span><br/><span class="indent-2">List&lt;Runnable&gt; runnables = new ArrayList&lt;Runnable&gt;();</span><br/><span class="indent-2">runnables.add(new MyRunnable());</span><br/><span class="indent-2">runnables.add(new MyRunnable());</span><br/><span class="indent-2">runnables.add(new MyRunnable());</span><br/><span class="indent-2">runnables.add(new MyRunnable());</span><br/><span class="indent-2">ExecutorService serv = Executors.newFixedThreadPool(10);</span><br/><span class="indent-2">executeRunnables(serv, runnables);</span><br/><span class="indent-1">}</span><br/>}</code></pre>
+      			<br/>La gestion des threads est <b class="underlined">automatique</b>
+      		</div>
+      	</section>
+      	<section>
+      		<h2>Future</h2>
+      	<div>
+      		<pre><code class="java" data-trim data-noescape>public class Main {<br/><span class="indent-1">public static void main(String[] args) {</span><br/><span class="indent-2">ExecutorService serv =</span><br/><span class="indent-4">Executors.newSingleThreadExecutor();</span><br/><span class="indent-2">Future&lt;Integer&gt; future = serv.submit(new MyCallable());</span><br/><span class="indent-2">try {</span><br/><span class="indent-3">System.out.println("Result of the Callable"</span><br/><span class="indent-4">+ future.get()); /* Blocking call */</span><br/><span class="indent-2">}</span><br/><span class="indent-2">catch (InterruptedException e) { e.printStackTrace(); }</span><br/><span class="indent-2">catch (ExecutionException e) { e.printStackTrace(); }</span><br/><span class="indent-2">System.out.println("After submit");</span><br/><span class="indent-2">serv.shutdown();</span><br/><span class="indent-1">}</span><br/>}</code></pre>
+      		<br/>On peut maintenant renvoyer des résultats ou jeter des exceptions et appeler des méthodes dans <b class="underlined">différents threads</b>
+      	</div>
+      	</section>
+      	<section>
+      		<h2>Future</h2>
+      		<h4>Java 6 : La limite des tâches asynchrones...</h4>
+      		<ul>
+      			<li>La méthode <b class="underlined">get()</b> est <b class="underlined">bloquante</b></li>
+      			&rarr; résultat indisponible tant que tout n'est pas chargé
+      			<li><b class="underlined">Pas de méthode de callback</b></li>
+      			<li>Seul le <b class="underlined">thread associé au Future</b> peut alimenter le résultat</li>
+      		</ul>
+      	</section>
+      	<section>
+      		<h2>Future</h2>
+      		<h4>Java 7 : CompletionService</h4>
+      		Runnable &rarr; ExecutorCompletionService &rarr; FutureTask<br/><br/>
+      		<ul>
+      			<li>Exécution dans l'<b class="underlined">ordre de complétion</b> (pas l'ordre d'appel)</li>
+      			<li>Possibilité de faire un <b class="underlined">callback</b></li>
+      			<li>Affichage des données <b class="underlined">au fur et à mesure</b></li>
+      		</ul>
+      	</section>
+      	<section>
+      		<h4>Une execution multi-threadée classique</h4>
+      		<div>
+      			<pre><code class="java" data-trim data-noescape>public class Main {<br/><span class="indent-1">public static void main (String[] args) {</span><br/><span class="indent-2">/* myTask implements Callable&lt;V&gt; */</span><br/><span class="indent-2">List&lt;Callable&lt;Integer&gt;&gt; tasks = new ArrayList&lt;&gt;();</span><br/><span class="indent-2">Callable&lt;Integer&gt; task1 = new MyTask(5);</span><br/><span class="indent-2">Callable&lt;Integer&gt; task2 = new MyTask(10);</span><br/><span class="indent-2">Callable&lt;Integer&gt; task3 = new MyTask(2);</span><br/><span class="indent-2">tasks.add(task1);</span><br/><span class="indent-2">tasks.add(task2);</span><br/><span class="indent-2">tasks.add(task3);</span><br/><span class="indent-2">ExecutorService serv =</span><br/><span class="indent-4">Executors.newFixedThreadPool(10);</span><br/><span class="indent-2">resolve(serv, tasks);</span><br/><span class="indent-1">}</span><br/><span class="indent-1">public static void resolve( ... ) { /* Implementation */ }</span><br/>}</code></pre>
+      		</div>
+      	</section>
+      	<section>
+      		<h4>ExecutorCompletionService</h4>
+      		<div>
+      			<pre><code class="java" data-trim data-noescape>public static void resolve(final ExecutorService serv,<br/><span class="indent-4">List&lt;Callable&lt;Integer&gt;&gt; tasks) {</span><br/><span class="indent-1">CompletionService&lt;Integer&gt; completionServ =</span><br/><span class="indent-4">new ExecutorCompletionService&lt;&gt;(serv);</span><br/><span class="indent-1">List&lt;Future&lt;Integer&gt;&gt; futures = new ArrayList&lt;&gt;();</span><br/><span class="indent-1">try {</span><br/><span class="indent-2">for(Callable&lt;Integer&gt; t : tasks)</span><br/><span class="indent-3">futures.add(completionServ.submit(t));</span><br/><span class="indent-2">for (int i = 0; i &lt; tasks.size(); ++i) {</span><br/><span class="indent-3">try {</span><br/><span class="indent-4">res = completionServ.take().get();</span><br/><span class="indent-4">if (res != null) System.out.println(res);</span><br/><span class="indent-3">} catch (ExecutionException ignored) {} }</span><br/><span class="indent-1">} catch (Exception e) { e.printStackTrace(); }</span><br/><span class="indent-1">finally { serv.shutdown(); }<br/>}</span></code></pre>
+      		</div>
+      	</section>
+      	<section>
+      		<h4>Un mix entre Future et CompletionStage &rarr; CompletableFuture</h4>
+      		<ul>
+      			<li><b class="underlined">N'importe quel thread</b> peut alimenter le résultat</li>
+      			<li>Possibilité de <b class="underlined">réagir à un évènement asynchrone</b> pour débloquer un CompletableFuture</li>
+      			<li>Enregistrement <b class="underlined">de callbacks ou de closures</b> utilisables lorsqu'un résultat sera disponible</li>
+      			<li>Tant que le thread de pool n'est pas saturé, on peut executer des <b class="underlined">traitements en tâche de fond</b></li>
+      			<li>L'exception ne peut pas être transmise dans le thenApply car la <b class="underlined">closure est exécutée dans un thread différent</b></li>
+      		</ul>	
+      	</section>
+      	<section>
+      		<h4>Création &amp; Génération des CompletableFuture</h4>
+      		<div>
+				<pre><code class="java" data-trim data-noescape>CompletableFuture&lt;String&gt; future = new CompletableFuture&lt;&gt;();</code></pre>
+      			<b class="underlined">Automatiquement</b> via des Factory :
+      			<ul>
+      				<li>runAsync pour les Runnable</li>
+      				<li>applyAsync pour les Supplier</li>
+      			</ul>
+      			<pre><code class="java" data-trim data-noescape>CompletableFuture&lt;String&gt; future = <br/><span class="indent-3">CompletableFuture.supplyAsync(() -&gt; "42");</span></code></pre>
+      		</div>
+      	</section>
+      	<section>
+      		<h4>Les actions possibles sur un CompletableFuture</h4>
+      		<h4><img class="no-border" src="images/thenApply.png"></h4>
+      		<div>
+      			thenApply
+      			<pre><code class="java" data-trim data-noescape>CompletableFuture&lt;String&gt; f1 = /* ... */<br/>CompletableFuture&lt;Integer&gt; f2 = f1.thenApply(Integer::parseInt);<br/>CompletableFuture&lt;Double&gt; f3 = f2.thenApply(r -&gt; r * r * Math.PI);</code></pre>
+      			<pre><code class="java" data-trim data-noescape>CompletableFuture&lt;Double&gt; f3 = f1.thenApply(Integer::parseInt)<br/><span class="indent-5">.thenApply(r -&gt; r * r * Math.PI);</code></pre>
+      			thenAccept &amp; thenRun
+      			<pre><code class="java" data-trim data-noescape>future.thenAcceptAsync(dbl -&gt; log.debug("Result: {}", dbl), executor);<br/>/* these methods do not block execution */</code></pre>
+      		</div>
+      	</section>
+      	<section>
+      		<h4>Les actions possibles sur un CompletableFuture</h4>
+      		<h4><img class="no-border" src="images/handle.png" height="200"></h4>
+      		<div>
+      			Gestion des erreurs : exceptionally &amp; handle
+      			<pre><code class="java" data-trim data-noescape>CompletableFuture&lt;String&gt; safe =<br/><span class="indent-1">future.exceptionally(e -&gt; "Exception : " + e.getMessage());</span></code></pre>
+      			<pre><code class="java" data-trim data-noescape>CompletableFuture&lt;Integer&gt; better = future.handle((ok, e) -&gt; {<br/><span class="indent-1">if (ok != null) {</span><br/><span class="indent-2">return Integer.parseInt(ok);</span><br/><span class="indent-1">} else {</span><br/><span class="indent-2">log.warn("Exception", e);</span><br/><span class="indent-2">return -1;</span><br/><span class="indent-1">}</span><br/>});</code></pre>
+      		</div>
+      	</section>
+      	<section>
+      		<h4>Les actions possibles sur un CompletableFuture</h4>
+      		<h4><img class="no-border" src="images/allOf.png" height="200"></h4>
+      		<div>
+      			allOf
+      			<pre><code class="java" data-trim data-noescape>CompletableFuture&lt;Void&gt; f = CompletableFuture.allOf(f1,f2,f3);</code></pre>
+      		</div>
+      	</section>
+      	<section>
+      		<h4>Les actions possibles sur un CompletableFuture</h4>
+      		<h4><img class="no-border" src="images/anyOf.png" height="200"></h4>
+      		<div>
+      			anyOf
+      			<pre><code class="java" data-trim data-noescape>CompletableFuture&lt;Object&gt; f = CompletableFuture.anyOf(f1,f2,f3);</code></pre>
+      		</div>
+      	</section>
+    </section>
+    <section>
+	    <section>
+	    	<h2>Conclusion</h2>
+	    </section>
+	    <section>
+	    	<h2>Java 9</h2>
+	    	<h4>Sortie prévue en mars 2017</h4>
+	    	<ul>
+	    		<li>Une <b class="underlined">nouvelle API de Logging</b> (Unified JVM Logging)</li>
+	    		<li>Plus de <b class="underlined">contrôle</b> au niveau de la <b class="underlined">compilation</b></li>
+	    		<li>Résolution des warnings Lint et Doclint
+	    			<ul>
+	    				<li><b class="underlined">nettoyage</b> des avertissements</li>
+	    				<li>support de <b class="underlined">HTML5</b> dans la <b class="underlined">javadoc</b></li>
+	    			</ul>
+	    		</li>
+	    		<li>Nouvelles <b class="underlined">API</b> :
+	    			<ul>
+	    				<li>lightweight <b class="underlined">JSON</b></li>
+	    				<li><b class="underlined">HTTP2</b> Client</li>
+	    				<li><b class="underlined">Web Sockets</b></li>
+	    			</ul>
+	    		</li>
+	    		<li><b class="underlined">Jigsaw</b> : découpage de la bibliothèque de base de Java en <b class="underlined">modules</b> &rarr; JAR n'existera plus...</li>
+	    	</ul>
+	    </section>
+	    <section>
+        <h2>Java pains</h2>
+        <h4><img src="images/nomore.gif" height="200px"/></h4>
+        <ul>
+          <li><span class="barre">Langage verbeux</span></li>
+          <li><span class="barre">API Date &amp; Time</span></li>
+          <li><span class="barre">Pas de fonctionnel</span></li>
+          <li><span class="barre">Algorithmes Map Reduce</span></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Java pains</h2>
+        <h4><img src="images/nomore.gif" height="200px"/></h4>
+        <ul>
+          <li><span class="barre">Gestion concurrence / threads</span></li>
+          <li>Classpath &rarr; Java 9</li>
+          <li>Taille du JDK &rarr; Java 9</li>         
+          <li>API Logging &rarr; Java 9</li>
+        </ul>
+      </section>
+    </section>
+    </div>
+</div>
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+<script>
+  // More info https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    history: true,
+
+    // More info https://github.com/hakimel/reveal.js#dependencies
+    dependencies: [
+      {src: 'plugin/markdown/marked.js'},
+      {src: 'plugin/markdown/markdown.js'},
+      {src: 'plugin/notes/notes.js', async: true},
+      {
+        src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+        hljs.initHighlightingOnLoad();
+      }
+      }
+    ]
+  });
+</script>
+<script type="text/javascript">
+            var timer = document.getElementById('time');
+            timer.innerHTML = Date.now();
+            setInterval(function(){
+                timer.innerHTML = Date.now();
+            }, 1);
+</script>
+</body>
+</html>
